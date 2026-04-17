@@ -2,7 +2,7 @@
 import subprocess
 subprocess.run(["pip", "install", "textblob"], capture_output=True)
 
-# Step 2 - Import sab kuch
+# Step 2 - Import everything
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -25,7 +25,7 @@ df2 = pd.read_csv(r'C:\Users\chetn\Downloads\goemotion\data\full_dataset\goemoti
 df3 = pd.read_csv(r'C:\Users\chetn\Downloads\goemotion\data\full_dataset\goemotions_3.csv')
 df = pd.concat([df1, df2, df3], ignore_index=True)
 
-# Emotion column banao
+# Make emotion column 
 emotion_cols = ['admiration','amusement','anger','annoyance','approval',
 'caring','confusion','curiosity','desire','disappointment','disapproval',
 'disgust','embarrassment','excitement','fear','gratitude','grief','joy',
