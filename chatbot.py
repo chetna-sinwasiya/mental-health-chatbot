@@ -1,4 +1,3 @@
-
 # Step 1 - Import everything
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -21,7 +20,6 @@ df2 = pd.read_csv('data/full_dataset/goemotions_2.csv')
 df3 = pd.read_csv('data/full_dataset/goemotions_3.csv')
 df = pd.concat([df1, df2, df3], ignore_index=True)
 
-# Make emotion column 
 emotion_cols = ['admiration','amusement','anger','annoyance','approval',
 'caring','confusion','curiosity','desire','disappointment','disapproval',
 'disgust','embarrassment','excitement','fear','gratitude','grief','joy',
@@ -67,16 +65,19 @@ model_lstm = Sequential([
     Dense(28, activation='softmax')
 ])
 model_lstm.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-model_lstm.fit(tf.constant(padded),
+model_lstm.fit(
+    tf.constant(padded),
     tf.constant(numeric_labels),
     epochs=3,
-    verbose=1)
+    verbose=1
+)
 print("LSTM ready!")
 
 # Step 5 - Chatbot responses
 def mental_health_chatbot(user_input, emotion):
     user_input_lower = user_input.lower()
-     if "motivate" in user_input_lower or "motivation" in user_input_lower or "inspire" in user_input_lower:
+
+    if "motivate" in user_input_lower or "motivation" in user_input_lower or "inspire" in user_input_lower:
         return random.choice([
             "You are capable of amazing things! Keep going! 💪",
             "Every day is a new chance to be better! You've got this! 🌟",
@@ -124,7 +125,7 @@ def mental_health_chatbot(user_input, emotion):
             "Life can be surprising! Embrace the uncertainty! 🌟",
             "Confusion means you're thinking deeply. That's great! 😊"
         ])
-         elif "disturb" in user_input_lower or "ill" in user_input_lower or "mentally" in user_input_lower or "broken" in user_input_lower or "hopeless" in user_input_lower:
+    elif "disturb" in user_input_lower or "ill" in user_input_lower or "mentally" in user_input_lower or "broken" in user_input_lower or "hopeless" in user_input_lower:
         return random.choice([
             "I hear you. That takes courage to say. You're not alone 💙",
             "Thank you for sharing this. Please consider talking to someone you trust 🌸",
@@ -162,7 +163,7 @@ print("Type 'quit' to exit\n")
 # Step 7 - Conversation
 while True:
     user_input = input("You: ")
-     if user_input.lower() in ["quit", "bye", "exit", "goodbye"]:
+    if user_input.lower() in ["quit", "bye", "exit", "goodbye"]:
         print("Chatbot: Take care! You're not alone! 💙")
         break
     emotion, confidence = predict_emotion_lstm(user_input)
